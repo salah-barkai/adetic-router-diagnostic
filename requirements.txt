@@ -1,5 +1,4 @@
 Flask
 paramiko
-subprocess
 shlex
 re
