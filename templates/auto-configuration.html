@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuration du Routeur</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        /* Styles CSS directement dans le fichier HTML */
+        .corps {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"], 
+        input[type="password"], 
+        textarea, 
+        select {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: skyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .site {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .site p {
+            margin: 0;
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="./static/logo-adetic.jpeg">
+        <div class="site">
+            <p>site web</p>
+            <ion-icon class="web" name="globe-outline"></ion-icon>
+        </div>    
+    </header>
+
+    <div class="corps">
+        <a href="/">Retour à l'accueil</a>
+        <!-- Configuration Automatique -->
+        <h2>Configuration Automatique</h2>
+        <form method="POST" action="/auto-configuration">
+            <label for="ip">Adresse IP du routeur :</label>
+            <input type="text" id="ip" name="ip" required>
+
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required>
+
+            <select name="router_type" id="router-type" required>
+              <option value="cisco">Cisco</option>
+              <option value="mikrotik">MikroTik</option>
+            </select>
+
+            <label for="config_type">Type de configuration :</label>
+            <select id="config_type" name="config_type">
+                <option value="basic">Basique</option>
+                <option value="advanced">Avancée</option>
+            </select>
+
+            <button type="submit">Appliquer</button>
+        </form>
+
+        <!-- Configuration Manuelle -->
+        <h2>Configuration Manuelle</h2>
+        <form method="POST" action="/manual-configuration">
+            <label for="ip_manual">Adresse IP du routeur :</label>
+            <input type="text" id="ip_manual" name="ip" required>
+
+            <label for="username_manual">Nom d'utilisateur :</label>
+            <input type="text" id="username_manual" name="username" required>
+
+            <label for="password_manual">Mot de passe :</label>
+            <input type="password" id="password_manual" name="password" required>
+
+            <select name="router_type" id="router-type" required>
+              <option value="cisco">Cisco</option>
+              <option value="mikrotik">MikroTik</option>
+            </select>
+
+            <label for="manual_commands">Commandes manuelles (séparées par des retours à la ligne) :</label>
+            <textarea id="manual_commands" name="manual_commands" rows="10" cols="50" required></textarea>
+
+            <button type="submit">Exécuter</button>
+        </form>
+
+        <!-- Visualiser la configuration actuelle -->
+        <h2>Visualiser la configuration du routeur</h2>
+        <form method="POST" action="/show-running-config">
+            <label for="ip_show">Adresse IP du routeur :</label>
+            <input type="text" id="ip_show" name="ip" required>
+
+            <label for="username_show">Nom d'utilisateur :</label>
+            <input type="text" id="username_show" name="username" required>
+
+            <label for="password_show">Mot de passe :</label>
+            <input type="password" id="password_show" name="password" required>
+
+            <select name="router_type" id="router-type" required>
+              <option value="cisco">Cisco</option>
+              <option value="mikrotik">MikroTik</option>
+            </select>
+
+            <button type="submit">Visualiser</button>
+        </form>
+    </div>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+</body>
+</html>

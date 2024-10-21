@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ping</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <style>
+        /* Styles CSS directement dans le fichier HTML */
+        .corps {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"], 
+        input[type="password"], 
+        textarea, 
+        select {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: skyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .site {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .site p {
+            margin: 0;
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+    <header>
+        <img src="./static/logo-adetic.jpeg" alt="Logo Adetic">
+        <div class="site">
+            <p>site web</p>
+            <ion-icon class="web" name="globe-outline"></ion-icon>
+
+        </div>
+    </header>
+    
+    <div class="corps1">
+        <h1>Ping</h1>
+        <form id="ping-form">
+            <input type="text" name="host" placeholder="Adresse IP ou domaine" required>
+            <button type="submit">Ping</button>
+        </form>
+        <pre id="ping-result"></pre>
+        <p class="con-bonne" style="display: none;">La connexion est bonne...</p> <!-- Masquer par défaut -->
+        <a href="/">Retour à l'accueil</a>
+    </div>
+
+    <!-- Ionicons scripts -->
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+    <script>
+        const web = document.querySelector(".web");
+        web.addEventListener('click', () => {
+            window.open('https://adetic.td', '_blank');
+        });
+
+        document.getElementById('ping-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const con_bonne = document.querySelector('.con-bonne');
+            
+            // Masquer le message avant de refaire un ping
+            con_bonne.style.display = 'none';
+            
+            fetch('/ping', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ping-result').textContent = data.result;
+                
+                // Si le ping échoue
+                if (data.result === "Adresse IP ou nom d'hôte invalide." || data.result === 'Ping échoué.') {
+                    con_bonne.textContent = 'Aucune connexion...';
+                    con_bonne.style.color = 'red'
+                    con_bonne.style.display = 'block';  // Afficher le message d'échec
+                } 
+                // Si le ping réussit
+                else {
+                    con_bonne.textContent = 'La connexion est bonne...';
+                    con_bonne.style.color = 'blue';
+                    con_bonne.style.display = 'block';  // Afficher le message de réussite
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors du ping:', error);
+                con_bonne.textContent = 'Erreur du serveur...';
+                con_bonne.style.color = 'orange';
+                con_bonne.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

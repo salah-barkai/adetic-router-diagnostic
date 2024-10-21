@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Outils de Diagnostic de Routeur</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+	<header>
+		<img src="./static/logo-adetic.jpeg">
+        <div class="site">
+            <p>site web</p>
+            <ion-icon class="web" name="globe-outline"></ion-icon>
+
+        </div>	
+    </header>
+	<div class="outils">
+	 <h1 class="titre">Outils de Diagnostic de Routeur</h1> <br>
+   </div>
+   <div><p class="t_fonction">Fonctionnalités du support</p></div>
+   <div class="menu">
+	 <ul>
+        <li class="ping"><a href="/ping">Ping</a></li>
+        <li class="netstat"><a href="/netstat">Netstat</a></li>
+        <li class="config"><a href="/config">Afficher la Configuration</a></li>
+        <li class="config"><a href="/auto-configuration">Configuration Routeur</a></li>
+    </ul>
+   </div>
+
+   <footer class="foot">
+   	  <div class="element">
+   	  	<a href="https://www.facebook.com/Adetic.td"><ion-icon name="logo-facebook"></ion-icon></a>
+   	  	<a href=""><ion-icon name="logo-twitter"></ion-icon></a>
+   	  	<a href=""><ion-icon name="logo-instagram"></ion-icon></a>
+   	  </div>
+        <p>&copy; 2024 Adetic. Tous droits réservés.</p>
+   </footer>
+
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+    <script>
+      const web = document.querySelector(".web");
+        web.addEventListener('click', () => {
+         window.open('https://adetic.td', '_blank');
+         });
+
+      const ping = document.querySelector('.ping');
+      const netstat = document.querySelector('.netstat');
+      const config = document.querySelector('.config');
+
+      ping.addEventListener('click', ()=> {
+        window.location.href='/ping';
+      });
+
+      netstat.addEventListener('click', ()=> {
+        window.location.href='/netstat';
+      });
+
+      config.addEventListener('click', ()=>{
+        window.location.href='/config';
+      });
+
+
+    </script>
+</body>
+</html>
